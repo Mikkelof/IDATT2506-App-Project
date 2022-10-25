@@ -24,8 +24,7 @@ function ListList(props) {
                 </View>
                 <View>
                     <FlatList data={props.titles} renderItem={(itemData) => {
-                        return <Text>{itemData.item.text}</Text>
-                        //<ListItem text={itemData.text} id={itemData.id} />
+                        return <ListItem text={itemData.item.text} id={itemData.id} />
                     }} />
                 </View>
             </View>
