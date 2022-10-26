@@ -8,7 +8,7 @@ function ListList(props) {
 
     function listInputHandler(enteredText) {
         setEnteredListTitle(enteredText);
-    };
+    }
 
     function addListHandler() {
         props.onAddList(enteredListTitle);
@@ -28,7 +28,7 @@ function ListList(props) {
                 </View>
                 <View>
                     <FlatList data={props.titles} renderItem={(itemData) => {
-                        return <ListListItem text={itemData.item.text} id={itemData.id} onOpenList={openList} />
+                        return <ListListItem text={itemData.item.text} id={itemData.item.id} onOpenList={openList} />
                     }} />
                 </View>
             </View>

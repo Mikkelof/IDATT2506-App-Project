@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import ListItem from './components/ListItem';
 import ListList from './components/ListList';
+import ItemList from './components/ItemList';
 
 export default function App() {
   const [modalIsVisible, setModalIsVisible] = useState(true);
@@ -19,7 +19,7 @@ export default function App() {
 
   //To add an item to an existing list
   function addListItemHandler(enteredListItemText) {
-    setListItems((currentListItems) => [...currentListItems, {text: enteredListText, id: Math.random().toString()}]);
+    setListItems((currentListItems) => [...currentListItems, {text: enteredListItemText, id: Math.random().toString()}]);
   };
 
   //To add a new list to the list-overview
@@ -33,8 +33,9 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <Button title='Lists' onPress={startListHandler} />
+      <ItemList items={listItems} onAddItem={addListItemHandler} />
       <ListList visible={modalIsVisible} onOpenList={openList} titles={listTitles} onAddList={addListTitleHandler} />
     </View>
   );
