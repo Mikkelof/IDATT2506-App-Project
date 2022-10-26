@@ -17,35 +17,26 @@ export default function App() {
 
   useEffect(() => {
     setCurrentListItems(getFilteredList(currentListId));
-    console.log(currentListId, " currentListId from useEffect")
   }, [currentListId, listItems])
-
-  function endListHandler() {
-    setModalIsVisible(false);
-  }
 
   //To add an item to an existing list
   function addListItemHandler(enteredListItemText) {
     setListItems((currentListItems) => [...currentListItems, {text: enteredListItemText, id: Math.random().toString(), parentid: currentListId}]);
-  };
+  }
 
   //To add a new list to the list-overview
   function addListTitleHandler(enteredListTitleText) {
     setListTitles((currentListTitles) => [...currentListTitles, {text: enteredListTitleText, id: Math.random().toString()}]);
-    //endListHandler();   //Burde åpne listen som ble laget
-  };
+  }
 
   function getFilteredList(id) {
     //listItems.forEach((item) => console.log(item.parentid))
     var tempArray = listItems.filter((item) => item.parentid == id);
-    console.log(tempArray.length)
     return tempArray
   }
 
   function openList(id) {
-    console.log(id, " id from openList")
     setCurrentListId(id);
-    console.log(currentListId, " currentListId from openList")
     setModalIsVisible(false);
   }
 
