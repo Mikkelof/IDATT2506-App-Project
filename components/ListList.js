@@ -1,6 +1,6 @@
 import { Modal, View, TextInput, Button, Text, FlatList } from "react-native";
 import { useState } from 'react';
-import ListItem from "./ListItem";
+import ListListItem from "./ListListItem";
 
 
 function ListList(props) {
@@ -15,6 +15,10 @@ function ListList(props) {
         setEnteredListTitle('');
     }
 
+    function openList() {
+        props.onOpenList()
+    }
+
     return (
         <Modal visible={props.visible} animationType="slide" >
             <View>
@@ -24,7 +28,7 @@ function ListList(props) {
                 </View>
                 <View>
                     <FlatList data={props.titles} renderItem={(itemData) => {
-                        return <ListItem text={itemData.item.text} id={itemData.id} />
+                        return <ListListItem text={itemData.item.text} id={itemData.id} onOpenList={openList} />
                     }} />
                 </View>
             </View>
