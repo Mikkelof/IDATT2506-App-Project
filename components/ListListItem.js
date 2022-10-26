@@ -4,7 +4,7 @@ import { View, Pressable, Text } from "react-native";
 function ListListItem(props) {
     return (
         <View>
-            <Pressable onPress={props.onOpenList}>
+            <Pressable onPress={props.onOpenList.bind(this, props.id)}>
                 <Text>
                     {props.text}
                 </Text>

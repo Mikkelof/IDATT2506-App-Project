@@ -15,8 +15,8 @@ function ListList(props) {
         setEnteredListTitle('');
     }
 
-    function openList() {
-        props.onOpenList()
+    function openList(id) {
+        props.onOpenList(id)
     }
 
     return (
