@@ -10,6 +10,7 @@ export default function App() {
   const [listTitles, setListTitles] = useState([]);
   const [currentListItems, setCurrentListItems] = useState([]);
   const [currentListId, setCurrentListId] = useState();
+  const [currentTitle, setCurrentTitle] = useState('');
 
   function startListHandler() {
     setModalIsVisible(true);
@@ -30,19 +31,29 @@ export default function App() {
   }
 
   function getFilteredList(id) {
-    //listItems.forEach((item) => console.log(item.parentid))
     var tempArray = listItems.filter((item) => item.parentid == id);
     return tempArray
   }
 
-  function openList(id) {
-    setCurrentListId(id);
+  function openList(list) {
+    setCurrentListId(list.id);
+    setCurrentTitle(list.text);
     setModalIsVisible(false);
+  }
+
+  function getTitle() {
+    let curTitle = listItems.find(o => o.id === currentListId)
+    if (curTitle !== undefined) {
+      return curTitle.text
+    }
   }
 
   return (
     <View>
-      <Button title='Lists' onPress={startListHandler} />
+      <View>
+        <Button title='Lists' onPress={startListHandler} />
+        <Text>{currentTitle}</Text>
+      </View>
       <ItemList items={currentListItems} onAddItem={addListItemHandler} />
       <ListList visible={modalIsVisible} onOpenList={openList} titles={listTitles} onAddList={addListTitleHandler} />
     </View>
