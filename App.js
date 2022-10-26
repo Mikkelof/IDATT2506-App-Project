@@ -41,30 +41,30 @@ export default function App() {
     setModalIsVisible(false);
   }
 
-  function getTitle() {
-    let curTitle = listItems.find(o => o.id === currentListId)
-    if (curTitle !== undefined) {
-      return curTitle.text
-    }
-  }
-
   return (
-    <View>
-      <View>
+    <View style={styles.appContainer}>
+      <View style={styles.listsAndTitle}>
+        <Text style={styles.title}>{currentTitle}</Text>
         <Button title='Lists' onPress={startListHandler} />
-        <Text>{currentTitle}</Text>
       </View>
-      <ItemList items={currentListItems} onAddItem={addListItemHandler} />
+      <View >
+        <ItemList items={currentListItems} onAddItem={addListItemHandler} />
+      </View>
       <ListList visible={modalIsVisible} onOpenList={openList} titles={listTitles} onAddList={addListTitleHandler} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  appContainer: {
+    paddingTop: 50,
+    paddingHorizontal: 16
   },
+  listsAndTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  title: {
+    fontSize: 30
+  }
 });

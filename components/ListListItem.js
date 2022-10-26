@@ -1,10 +1,10 @@
-import { View, Pressable, Text } from "react-native";
+import { View, StyleSheet, Pressable, Text } from "react-native";
 
 
 function ListListItem(props) {
     return (
-        <View>
-            <Pressable onPress={props.onOpenList.bind(this, props)}>
+        <View style={styles.listItem}>
+            <Pressable android_ripple={{ color: '#210644' }} onPress={props.onOpenList.bind(this, props)}>
                 <Text>
                     {props.text}
                 </Text>
@@ -14,3 +14,11 @@ function ListListItem(props) {
 }
 
 export default ListListItem;
+
+const styles = StyleSheet.create({
+    listItem: {
+      margin: 8,
+      borderBottomColor: '#cccccc',
+      borderBottomWidth: 1
+    }
+});

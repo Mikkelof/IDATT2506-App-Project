@@ -1,5 +1,5 @@
 import ListItem from "./ListItem";
-import { Modal, View, TextInput, Button, Text, FlatList } from "react-native";
+import { StyleSheet, Modal, View, TextInput, Button, Text, FlatList } from "react-native";
 import { useState } from 'react';
 
 function ItemList(props) {
@@ -16,8 +16,8 @@ function ItemList(props) {
 
     return (
         <View>
-            <TextInput placeholder='Your new item!' onChangeText={itemInputHandler} value={enteredListItem} />
-            <View>
+            <TextInput style={styles.inputField} placeholder='Your new item!' onChangeText={itemInputHandler} value={enteredListItem} />
+            <View style={styles.entireView}>
                 <Button title='Add item' onPress={addItemHandler} />
             </View>
             <View>
@@ -30,3 +30,18 @@ function ItemList(props) {
 }
 
 export default ItemList;
+
+const styles = StyleSheet.create({
+    inputField: {
+        borderWidth: 1,
+        borderColor: '#cccccc',
+        padding: 8,
+        marginTop: 12,
+        marginBottom: 12
+    },
+    entireView: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#cccccc',
+        paddingBottom: 16
+    }
+})
