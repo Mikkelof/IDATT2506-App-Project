@@ -22,7 +22,7 @@ export default function App() {
 
   //To add an item to an existing list
   function addListItemHandler(enteredListItemText) {
-    setListItems((currentListItems) => [...currentListItems, {text: enteredListItemText, id: Math.random().toString(), parentid: currentListId}]);
+    setListItems((currentListItems) => [...currentListItems, {text: enteredListItemText, id: Math.random().toString(), parentid: currentListId, done: false}]);
   }
 
   //To add a new list to the list-overview
@@ -41,6 +41,13 @@ export default function App() {
     setModalIsVisible(false);
   }
 
+  function markDone(id) {
+    listItems.forEach(item => {if (item.id === id) {
+      item.done = true;
+    }})
+    setCurrentListItems(getFilteredList(currentListId));
+  }
+
   return (
     <View style={styles.appContainer}>
       <View style={styles.listsAndTitle}>
@@ -48,7 +55,7 @@ export default function App() {
         <Button title='Lists' onPress={startListHandler} />
       </View>
       <View >
-        <ItemList items={currentListItems} onAddItem={addListItemHandler} />
+        <ItemList items={currentListItems} onAddItem={addListItemHandler} onMarkDone={markDone} />
       </View>
       <ListList visible={modalIsVisible} onOpenList={openList} titles={listTitles} onAddList={addListTitleHandler} />
     </View>
