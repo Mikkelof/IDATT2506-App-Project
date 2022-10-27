@@ -41,6 +41,12 @@ export default function App() {
     setModalIsVisible(false);
   }
 
+  function deleteList(list) {
+    setListTitles(listTitles => {
+      return listTitles.filter((otherList) => otherList.id !== list.id)
+    })
+  }
+
   function markDone(id) {
     listItems.forEach(item => {if (item.id === id) {
       item.done = true;
@@ -57,7 +63,7 @@ export default function App() {
       <View >
         <ItemList items={currentListItems} onAddItem={addListItemHandler} onMarkDone={markDone} />
       </View>
-      <ListList visible={modalIsVisible} onOpenList={openList} titles={listTitles} onAddList={addListTitleHandler} />
+      <ListList visible={modalIsVisible} onOpenList={openList} titles={listTitles} onAddList={addListTitleHandler} onDeleteList={deleteList} />
     </View>
   );
 }

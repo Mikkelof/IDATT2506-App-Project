@@ -19,6 +19,10 @@ function ListList(props) {
         props.onOpenList(id)
     }
 
+    function deleteList(id) {
+        props.onDeleteList(id)
+    }
+
     return (
         <Modal visible={props.visible} animationType="slide" >
             <View style={styles.entireView}>
@@ -28,7 +32,7 @@ function ListList(props) {
                 </View>
                 <View>
                     <FlatList data={props.titles} renderItem={(itemData) => {
-                        return <ListListItem text={itemData.item.text} id={itemData.item.id} onOpenList={openList} />
+                        return <ListListItem text={itemData.item.text} id={itemData.item.id} onOpenList={openList} onDeleteList={deleteList} />
                     }} />
                 </View>
             </View>

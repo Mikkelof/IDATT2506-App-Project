@@ -5,7 +5,7 @@ function ListItem(props) {
     return (
         <View style={styles.listItem}>
             <Pressable android_ripple={{ color: '#c3cbd9' }} onPress={props.onMarkDone.bind(this, props.id)}>
-                <Text>
+                <Text style={styles.text}>
                     {props.text}
                 </Text>
             </Pressable>
@@ -20,5 +20,8 @@ const styles = StyleSheet.create({
       margin: 8,
       borderBottomColor: '#cccccc',
       borderBottomWidth: 1
+    },
+    text: {
+        fontSize: 16
     }
 });
