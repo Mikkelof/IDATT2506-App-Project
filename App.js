@@ -45,6 +45,9 @@ export default function App() {
     setListTitles(listTitles => {
       return listTitles.filter((otherList) => otherList.id !== list.id)
     })
+    setListItems(listItems => {
+      return listItems.filter((item) => item.parentid !== list.id)
+    })
   }
 
   function markDone(id) {
