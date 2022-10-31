@@ -1,5 +1,5 @@
 import ListItem from "./ListItem";
-import { StyleSheet, Modal, View, TextInput, Button, Text, FlatList } from "react-native";
+import { StyleSheet, View, TextInput, Button, Text, FlatList } from "react-native";
 import { useState, useEffect } from 'react';
 
 function ItemList(props) {
@@ -7,20 +7,24 @@ function ItemList(props) {
     const [ongoingList, setOngoingList] = useState([]);
     const [doneList, setDoneList] = useState([]);
 
+    //Sets the entered text to the current list item
     function itemInputHandler(enteredText) {
         setEnteredListItem(enteredText);
     }
 
+    //Calls the onAddItem passed from the prop and empties the input field
     function addItemHandler() {
         props.onAddItem(enteredListItem);
         setEnteredListItem('');
     }
 
+    //Splits the items-list into two lists - ongoing items and done items - whenever props is changed
     useEffect(() => {
         setOngoingList(props.items.filter((item) => item.done === false));
         setDoneList(props.items.filter((item) => item.done === true));
     }, [props])
 
+    //Marks an item as done by calling the props.onMarkDone with the items id
     function markDone(id) {
         props.onMarkDone(id);
     }

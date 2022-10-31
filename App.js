@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import ListList from './components/ListList';
@@ -7,28 +6,24 @@ import * as FileSystem from 'expo-file-system';
 
 export default function App() {
   const [modalIsVisible, setModalIsVisible] = useState(true);
+  //The initial value gets the current items from items.json and loads them into the app. Only fetched on initialization
   const [listItems, setListItems] = useState(async () => {
     const itemsFilename = FileSystem.documentDirectory + "items.json";
     try {
       const itemsJson = await FileSystem.readAsStringAsync(itemsFilename);
       const items = JSON.parse(itemsJson);
-      // for(var i in items) {
-      //   itemList.push([i, items[i]]);
-      // }
       setListItems(items);
       return items;
     } catch(e) {
       console.log(e);
     }
   });
+  //The initial value gets the current titles from titles.json and loads them into the app. Only fetched on initialization
   const [listTitles, setListTitles] = useState(async () => {
     const titlesFilename = FileSystem.documentDirectory + "titles.json";
     try {
       const titlesJson = await FileSystem.readAsStringAsync(titlesFilename);
       const titles = JSON.parse(titlesJson);
-      // for(var i in titles) {
-      //   titleList.push([i, titles[i]]);
-      // }
       setListTitles(titles);
       return titles;
     } catch(e) {
@@ -39,72 +34,29 @@ export default function App() {
   const [currentListId, setCurrentListId] = useState();
   const [currentTitle, setCurrentTitle] = useState('');
 
+  //Hides/shows the list-overview
   function startListHandler() {
     setModalIsVisible(true);
   }
 
+  //Updates the items displayed by creating and displaying a filtered list with just the items belonging to a certain listId
   useEffect(() => {
     if(typeof currentListId !== "undefined") {
       setCurrentListItems(getFilteredList(currentListId));
     }
   }, [currentListId, listItems, listTitles])
 
+  //Updates the items.json file each time listItems or currentListItems are changed
   useEffect(() => {
     const itemsFilename = FileSystem.documentDirectory + "items.json";
     FileSystem.writeAsStringAsync(itemsFilename, JSON.stringify(listItems));
   }, [listItems, currentListItems])
 
+  //Updates the titles.json file each time listTitles are changed
   useEffect(() => {
     const titlesFilename = FileSystem.documentDirectory + "titles.json";
     FileSystem.writeAsStringAsync(titlesFilename, JSON.stringify(listTitles));
   }, [listTitles])
-
-  // useEffect(() => {
-  //   fetchItems();
-  //   fetchTitles();
-  //   console.log(Array.isArray(oldItems));
-  //   setListItems(oldItems);
-  //   setListTitles(oldTitles);
-  // }, [])
-
-  // async function fetchItems() {
-  //   const itemsFilename = FileSystem.documentDirectory + "items.json";
-  //   try {
-  //     const itemList = [];
-  //     const itemsJson = await FileSystem.readAsStringAsync(itemsFilename);
-  //     const items = JSON.parse(itemsJson);
-  //     console.log(items);
-  //     for(var i in items) {
-  //       itemList.push([i, items[i]]);
-  //       console.log(itemList.length);
-  //     }
-  //     setListItems(itemList);
-  //     console.log(Array.isArray(itemList));
-  //     return itemList;
-  //   } catch(e) {
-  //     console.log(e);
-  //   }
-  // }
-
-  // async function fetchTitles() {
-  //   const titlesFilename = FileSystem.documentDirectory + "titles.json";
-  //   try {
-  //     var titleList = [];
-  //     const titlesJson = await FileSystem.readAsStringAsync(titlesFilename);
-  //     const titles = JSON.parse(titlesJson);
-  //     console.log(titles)
-  //     for(var i in titles) {
-  //       titleList.push([i, titles[i]]);
-  //       console.log(titleList.length);
-  //     }
-  //     setListTitles(titleList);
-  //     console.log(titlesJson)
-  //     console.log(Array.isArray(titleList));
-  //     return titleList;
-  //   } catch(e) {
-  //     console.log(e);
-  //   }
-  // }
 
   //To add an item to an existing list
   function addListItemHandler(enteredListItemText) {
@@ -116,26 +68,31 @@ export default function App() {
     setListTitles((currentListTitles) => [...currentListTitles, {text: enteredListTitleText, id: Math.random().toString()}]);
   }
 
+  //Creates the filtered list only containing the items belonging to the list that is currently open
   function getFilteredList(id) {
     var tempArray = listItems.filter((item) => item.parentid == id);
-    return tempArray
+    return tempArray;
   }
 
+  //Opens a list by setting the listId so the correct items can be displayed, setting the title to 
+  //the list title and hiding the list-overview
   function openList(list) {
     setCurrentListId(list.id);
     setCurrentTitle(list.text);
     setModalIsVisible(false);
   }
 
+  //Deletes an entire list, including all the items belonging to the list
   function deleteList(list) {
     setListTitles(listTitles => {
-      return listTitles.filter((otherList) => otherList.id !== list.id)
+      return listTitles.filter((otherList) => otherList.id !== list.id);
     })
     setListItems(listItems => {
-      return listItems.filter((item) => item.parentid !== list.id)
+      return listItems.filter((item) => item.parentid !== list.id);
     })
   }
 
+  //Marks an item as done
   function markDone(id) {
     listItems.forEach(item => {if (item.id === id) {
       item.done = true;
