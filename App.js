@@ -14,8 +14,9 @@ export default function App() {
       const items = JSON.parse(itemsJson);
       setListItems(items);
       return items;
-    } catch(e) {
-      console.log(e);
+    } catch {
+      setListItems([]);
+      return([]);
     }
   });
   //The initial value gets the current titles from titles.json and loads them into the app. Only fetched on initialization
@@ -26,8 +27,9 @@ export default function App() {
       const titles = JSON.parse(titlesJson);
       setListTitles(titles);
       return titles;
-    } catch(e) {
-      console.log(e);
+    } catch {
+      setListTitles([]);
+      return([]);
     }
   });
   const [currentListItems, setCurrentListItems] = useState([]);
